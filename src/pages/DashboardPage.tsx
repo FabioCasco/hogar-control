@@ -148,7 +148,10 @@ export function DashboardPage({
               <div className="movement-row" key={movement.id}>
                 <div className={`movement-icon ${movement.delta < 0 ? 'negative' : ''}`}>{movement.delta >= 0 ? '+' : '−'}</div>
                 <div className="movement-copy"><strong>{movement.product_name}</strong><span>{movementLabel(movement)} · {movement.actor_name ?? 'Usuario'}</span></div>
-                <div className="movement-time"><strong>{movement.delta > 0 ? '+' : ''}{formatNumber(movement.delta)}</strong><span>{formatDate(movement.created_at)} · {formatTime(movement.created_at)}</span></div>
+                <div className="movement-time">
+                  <strong className={movement.delta >= 0 ? 'positive' : 'negative'}>{movement.delta > 0 ? '+' : ''}{formatNumber(movement.delta)}</strong>
+                  <time dateTime={movement.created_at}>{formatDate(movement.created_at)} · {formatTime(movement.created_at)}</time>
+                </div>
               </div>
             )) : <EmptyState icon="↺" title="Sin movimientos" copy="Los cambios de inventario aparecerán aquí." />}
           </div>
