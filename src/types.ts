@@ -61,6 +61,7 @@ export interface Product {
   ideal_stock: number
   on_shopping_list: boolean
   archived: boolean
+  stock_verified_at?: string | null
   created_by: string
   updated_by: string
   created_at: string
@@ -102,6 +103,34 @@ export interface HouseholdInvite {
   revoked_at: string | null
   created_by: string
   created_at: string
+}
+
+export interface SharedAccessAccount {
+  id: string
+  household_id: string
+  user_id: string
+  username: string
+  display_name: string
+  role: Exclude<HouseholdRole, 'admin'>
+  active: boolean
+  created_by: string
+  created_at: string
+  last_key_rotated_at: string | null
+}
+
+export interface BasicCatalogGroup {
+  category: string
+  count: number
+}
+
+export interface BasicCatalogSummary {
+  total: number
+  groups: BasicCatalogGroup[]
+}
+
+export interface BasicCatalogResult {
+  added: number
+  skipped: number
 }
 
 export interface HouseholdData {
