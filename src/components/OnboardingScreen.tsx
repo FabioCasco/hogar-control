@@ -19,6 +19,7 @@ export function OnboardingScreen({ user, repository, onReady, onSignOut }: Props
   const [error, setError] = useState('')
 
   const displayName = String(user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? 'Usuario').trim()
+  const isSharedAccess = user.app_metadata?.account_type === 'shared_access'
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -34,6 +35,21 @@ export function OnboardingScreen({ user, repository, onReady, onSignOut }: Props
     } finally {
       setBusy(false)
     }
+  }
+
+  if (isSharedAccess) {
+    return (
+      <main className="gateway-page onboarding-page">
+        <section className="gateway-card onboarding-card shared-access-unavailable">
+          <div className="gateway-brand"><BrandMark /><div><strong>Hogar Control</strong><span>Acceso compartido</span></div></div>
+          <div className="shared-unavailable-icon" aria-hidden="true">⌂</div>
+          <span className="eyebrow">Acceso sin asignación</span>
+          <h1>Este usuario no tiene un hogar activo.</h1>
+          <p>El acceso pudo haber sido pausado o retirado. Pide al administrador que lo active nuevamente; no necesitas crear otra cuenta.</p>
+          <button className="primary-button full" type="button" onClick={() => void onSignOut()}>Volver al inicio</button>
+        </section>
+      </main>
+    )
   }
 
   return (
@@ -52,7 +68,7 @@ export function OnboardingScreen({ user, repository, onReady, onSignOut }: Props
             <span className="choice-icon">⌂</span><strong>Crear un hogar</strong><small>Serás el administrador inicial.</small>
           </button>
           <button className={`choice-card ${mode === 'join' ? 'active' : ''}`} type="button" onClick={() => setMode('join')}>
-            <span className="choice-icon">＋</span><strong>Unirme con código</strong><small>Tu rol ya viene definido en la invitación.</small>
+            <span className="choice-icon">＋</span><strong>Unirme con código</strong><small>Disponible para cuentas administradoras heredadas.</small>
           </button>
         </div>
 
