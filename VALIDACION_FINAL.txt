@@ -1,0 +1,33 @@
+HOGAR CONTROL v0.3.0 — VALIDACIÓN FINAL
+Fecha: 2026-08-25
+
+SUPABASE
+- Proyecto conectado: nwxiwnggqzebrefabdxo
+- Migraciones registradas: 7
+- Tablas públicas: 7
+- RLS: activo en las 7 tablas
+- Storage: bucket privado product-images
+- Realtime: 6 tablas compartidas
+- Asesores: sin claves foráneas faltantes; índices nuevos todavía sin uso por base vacía
+- Advertencias de seguridad restantes: RPC privilegiadas intencionalmente disponibles solo para authenticated
+- Prueba estructural remota: superada
+- Simulación funcional SQL: superada con Administrador, Familiar y Asesora; ROLLBACK y 0 filas QA
+- Prueba de roles: promoción/degradación y denegación a Asesora superadas; 0 filas QA
+- Prueba de invitaciones: códigos de 12 caracteres superada; 0 filas QA
+
+FRONTEND
+- JSON validado: package.json, tsconfig, manifest
+- YAML validado: .github/workflows/deploy-pages.yml
+- Imports locales: completos
+- RPC del frontend: todas presentes en las migraciones
+- Variables: solo URL y clave publishable; no hay clave secret/service_role configurada
+- TypeScript: comprobación estructural offline superada con declaraciones mínimas locales
+- Workflow: build obligatorio antes de deploy
+- Rutas de GitHub Pages: base dinámica y callbacks de Auth adaptados
+
+LIMITACIONES
+- npm no pudo descargar dependencias en el entorno de preparación por DNS.
+- El build definitivo será verificado por GitHub Actions.
+- La prueba real de correo, sesiones de navegador, carga de imágenes y Realtime se ejecuta después de publicar.
+- La simulación multiusuario del backend ya fue completada; lo pendiente es la aceptación extremo a extremo desde navegadores reales.
+- El conector GitHub no expone creación de repositorios; la creación del repositorio y el primer push son manuales.
