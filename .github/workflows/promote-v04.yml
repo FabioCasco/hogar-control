@@ -1,0 +1,48 @@
+name: Promover actualización v0.4
+
+on:
+  push:
+    branches:
+      - uiux-v0-4
+    paths:
+      - '.github/workflows/promote-v04.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-uiux-v04
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    name: Compilar y promover a main
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 22
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Verificar TypeScript y compilar
+        env:
+          VITE_SUPABASE_URL: https://nwxiwnggqzebrefabdxo.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_N6RpfKrgZ98t7F7FoQXCTw_dApr8BWD
+        run: npm run build
+
+      - name: Promover versión validada
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin HEAD:main
